@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Прогноз погоды</title>
-   <!-- Bootstrap CSS -->
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   <title>Новости, Цитаты и Шутки</title>
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
 <div class="container mt-5">
-   <h1 class="text-center mb-4">Сайт с прогнозом погоды в любой точке мира</h1>
-   #создаём форму для запроса
-   <form method="post" class="form-inline justify-content-center mb-4">
-       <div class="form-group mx-sm-3 mb-2">
-           <input type="text" class="form-control" name="city" placeholder="Введите город" required>
-       </div>
-       <button type="submit" class="btn btn-primary mb-2">Узнать погоду</button>
-   </form>
+   <h1 class="text-center mb-4">Сайт с новостями и шутками</h1>
 
-   <div class="result text-center">
-       {% if weather %}
-           <h3>Погода в {{ weather['name'] }}</h3>
-           <p>Температура: {{ weather['main']['temp'] }}°C</p>
-           <p>Погода: {{ weather['weather'][0]['description'] }}</p>
-       {% endif %}
+   <!-- Кнопки -->
+   <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+       <form method="post">
+           <input type="hidden" name="action" value="news">
+           <button type="submit" class="btn btn-primary">Что новенького</button>
+       </form>
+       <form method="post">
+           <input type="hidden" name="action" value="joke">
+           <button type="submit" class="btn btn-info">Покажи шутку</button>
+       </form>
    </div>
 
-
+   <!-- Вывод результатов -->
    <div class="result text-center">
-
 
        {% if news %}
            <h2>Новости:</h2>
-           <ul>
+           <ul class="list-unstyled">
                {% for article in news %}
-                   <li><a href="{{ article['url'] }}"> {{ article['title'] }} </a></li>
+                   <li class="mb-2"><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></li>
                {% endfor %}
            </ul>
        {% endif %}
 
 
+{% if joke %}
+    <h2>Шутка / Joke:</h2>
+    <div class="alert alert-light">
+        <p class="mb-1"><strong>🇬🇧 English:</strong> {{ joke.en }}</p>
+        <p class="mb-0"><strong>🇷🇺 Русский:</strong> {{ joke.ru }}</p>
+    </div>
+{% endif %}
+
    </div>
 </div>
 
-
-<!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 </body>
+</html>
